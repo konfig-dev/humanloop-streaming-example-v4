@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Humanloop } from "humanloop";
+import { ChatRole, Humanloop } from "humanloop";
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,8 +8,8 @@ export default async function handler(
 ) {
   const humanloop = new Humanloop({
     apiKey: process.env.HUMANLOOP_API_KEY,
-    basePath: "http://127.0.0.1:4010",
-    openaiApiKey: "OPENAI_TEST_KEY",
+    basePath: "https://neostaging.humanloop.ml/v3",
+    openaiApiKey: process.env.OPENAI_API_KEY,
   });
   const response = await humanloop.chat({
     project: "ts-sdk-test",
@@ -18,10 +18,10 @@ export default async function handler(
         role: "system",
         content: "test",
       },
-      ...[{ role: "system", content: "Write me a song!" }],
+      ...[{ role: ChatRole.System, content: "Write me a song!" }],
     ],
     model_config: {
-      model: "text-davinci-003",
+      model: "gpt-3.5-turbo",
       max_tokens: 1000,
       temperature: 1,
     },
