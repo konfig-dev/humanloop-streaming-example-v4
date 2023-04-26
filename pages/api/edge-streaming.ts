@@ -10,7 +10,7 @@ export default async function handler(req: Request): Promise<Response> {
   console.log(input);
   const humanloop = new Humanloop({
     apiKey: process.env.HUMANLOOP_API_KEY,
-    basePath: "https://neostaging.humanloop.ml/v3",
+    basePath: "https://neostaging.humanloop.ml/v4",
     openaiApiKey: process.env.OPENAI_API_KEY,
   });
   const response = await humanloop.chatStream({
