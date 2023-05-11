@@ -43,6 +43,33 @@ export default function Home() {
           <input defaultValue="Write me a country song" ref={inputRef} />
           <input name="Chat" type="submit" />
         </form>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const response = await fetch("/api/edge-streaming-completion", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            console.log(response);
+
+            if (!response.body) throw Error();
+
+            const decoder = new TextDecoder();
+            const reader = response.body.getReader();
+            let done = false;
+            while (!done) {
+              const { value, done: doneReading } = await reader.read();
+              done = doneReading;
+              console.log(decoder.decode(value));
+            }
+          }}
+        >
+          <label>Complete</label>
+          <input name="Complete" type="submit" />
+        </form>
       </main>
     </>
   );
