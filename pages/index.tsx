@@ -70,6 +70,33 @@ export default function Home() {
           <label>Complete</label>
           <input name="Complete" type="submit" />
         </form>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const response = await fetch("/api/edge-streaming-anthropic-chat", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            console.log(response);
+
+            if (!response.body) throw Error();
+
+            const decoder = new TextDecoder();
+            const reader = response.body.getReader();
+            let done = false;
+            while (!done) {
+              const { value, done: doneReading } = await reader.read();
+              done = doneReading;
+              console.log(decoder.decode(value));
+            }
+          }}
+        >
+          <label>Anthropic Chat</label>
+          <input name="Anthropic Chat" type="submit" />
+        </form>
       </main>
     </>
   );
