@@ -37,6 +37,7 @@ export default function Home() {
                 done = doneReading;
                 console.log(decoder.decode(value));
               }
+              console.log("finished streaming");
             }
           }}
         >
@@ -65,6 +66,7 @@ export default function Home() {
               done = doneReading;
               console.log(decoder.decode(value));
             }
+            console.log("finished streaming");
           }}
         >
           <label>Complete</label>
@@ -92,6 +94,7 @@ export default function Home() {
               done = doneReading;
               console.log(decoder.decode(value));
             }
+            console.log("finished streaming");
           }}
         >
           <label>Anthropic Chat</label>
