@@ -41,7 +41,7 @@ export default function Home() {
             }
           }}
         >
-          <input defaultValue="Write me a country song" ref={inputRef} />
+          <input defaultValue="Hello!" ref={inputRef} />
           <input name="Chat" type="submit" />
         </form>
         <form
