@@ -47,6 +47,65 @@ export default function Home() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+            const response = await fetch(
+              "/api/edge-streaming-completion-error",
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            console.log(response);
+
+            if (!response.body) throw Error();
+
+            const decoder = new TextDecoder();
+            const reader = response.body.getReader();
+            let done = false;
+            while (!done) {
+              const { value, done: doneReading } = await reader.read();
+              done = doneReading;
+              console.log(decoder.decode(value));
+            }
+            console.log("finished streaming");
+          }}
+        >
+          <label>Complete (Error Edge)</label>
+          <input name="Complete" type="submit" />
+        </form>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const response = await fetch("/api/streaming-completion-error", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            console.log(response);
+
+            if (!response.body) throw Error();
+
+            const decoder = new TextDecoder();
+            const reader = response.body.getReader();
+            let done = false;
+            while (!done) {
+              const { value, done: doneReading } = await reader.read();
+              done = doneReading;
+              console.log(decoder.decode(value));
+            }
+            console.log("finished streaming");
+          }}
+        >
+          <label>Complete (Error)</label>
+          <input name="Complete" type="submit" />
+        </form>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
             const response = await fetch("/api/edge-streaming-completion", {
               method: "GET",
               headers: {
@@ -69,7 +128,7 @@ export default function Home() {
             console.log("finished streaming");
           }}
         >
-          <label>Complete</label>
+          <label>Complete (Edge)</label>
           <input name="Complete" type="submit" />
         </form>
         <form

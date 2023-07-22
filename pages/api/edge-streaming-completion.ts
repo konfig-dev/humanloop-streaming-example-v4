@@ -11,7 +11,6 @@ export default async function handler(req: Request): Promise<Response> {
     basePath: "https://neostaging.humanloop.ml/v4",
     openaiApiKey: process.env.OPENAI_API_KEY,
   });
-  console.log(humanloop.completeStream);
   const response = await humanloop.completeStream({
     project: "konfig-dev-001",
     inputs: {
